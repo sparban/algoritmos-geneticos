@@ -54,7 +54,8 @@ def poblacion_organizada(poblacion, numIndividuos, numGenes):
                 
     return vectorFitness
 '''
-# Organizo los individuos de mayor a menor
+# Organizo los individuos de mayor a menor segun el fitness
 
-print(sorted(poblacioninicial, key=lambda fitness: fitness[numGenes], reverse=True))
+poblacionOrganizada = sorted(poblacioninicial, key=lambda fitness: fitness[numGenes], reverse=True)
 
+print(poblacionOrganizada)
