@@ -3,7 +3,9 @@ import pandas as pd
 import random
 import math
 
-token "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"
+token = "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"
+
+## https://www.freecodecamp.org/espanol/news/ordenar-listas-en-python-como-ordenar-por-descendente-o-ascendente/
 
 # Defino los individuos
 numIndividuos = 3
@@ -39,6 +41,7 @@ def poblacion(numIndividuos, numGenes, rango):
 poblacioninicial = poblacion(numIndividuos, numGenes, rango)
 print(poblacioninicial)
 
+'''
 def poblacion_organizada(poblacion, numIndividuos, numGenes):
     vectorFitness = []
     for i in range(0, numIndividuos):
@@ -50,10 +53,8 @@ def poblacion_organizada(poblacion, numIndividuos, numGenes):
             if poblacion[j] == vectorFitness[z]:
                 
     return vectorFitness
+'''
+# Organizo los individuos de mayor a menor
 
-result = poblacion_organizada(poblacioninicial, numIndividuos, numGenes )
-
-print(result)
-        
-
+print(sorted(poblacioninicial, key=lambda fitness: fitness[numGenes], reverse=True))
 
