@@ -8,8 +8,8 @@ token = "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"
 ## https://www.freecodecamp.org/espanol/news/ordenar-listas-en-python-como-ordenar-por-descendente-o-ascendente/
 
 # Defino los individuos
-numIndividuos = 3
-numGenes = 4
+numIndividuos = 2
+numGenes = 2
 rango = 600
 contEvaluacion = 0
 # funcion de evaluacion
@@ -21,7 +21,7 @@ def funcion_evaluacion(individuo, contEvaluacion):
         y = round((individuo[i]*individuo[i]) + y, 2)
     return (y, contEvaluacion)
 
-# Creo la funcion de ventana de la población y el fitness de cada individuo
+# Creo la funcion de ventana de la población y el fitness de cada individuo (n individuos)
 
 def poblacion(numIndividuos, numGenes, rango):
     poblacion = []
@@ -36,7 +36,7 @@ def poblacion(numIndividuos, numGenes, rango):
     return poblacion
 
 poblacioninicial = poblacion(numIndividuos, numGenes, rango)
-#print(poblacioninicial)
+print(poblacioninicial)
 
 # Organizo los individuos de mayor a menor segun el fitness
 
