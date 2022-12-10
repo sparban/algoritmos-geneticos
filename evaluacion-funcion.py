@@ -13,10 +13,10 @@ r1 = 0.13
 r2 = 0.04
 # https://a2censo.com/campaignNew/836
 r3 = [-0.5, 0.16]
-# cultivos
+#  GRUPO TELINTEL SA ESP
 r4 = [-0.5, 0.18]
 # criptomonedad https://preahorro.com/invertir/riesgos-de-invertir-en-bitcoin/
-r5 = [-0.2, 0.2]
+r5 = [-0.1, 0.2]
 
 # tasas de interes
 
@@ -24,7 +24,7 @@ rtotal = [r1,r2,r3,r4,r5]
 
 # Tamaño de la poblacion
 
-poblacionNum = 4
+poblacionNum = 50
 
 # Numero de genes
 
@@ -34,6 +34,11 @@ poblacionOriginal = []
 
 contEvaluacion = 0
 
+fitnesPrimero = 0
+
+# % ganancia
+
+ganancia = 0.01
 
 # defino el individuo que cumpla las caracteristicas (su valores no sumen mas de 50.000)
 def funcion_individuo(valorInversion):
@@ -74,6 +79,7 @@ def evaluacion(poblacioninicial,r1,r2,r3,r4,r5, contEvaluacion):
         intereses = [interes1, interes2, interes3]
         poblacioninicial[i].append(fitnes)
         poblacioninicial[i].append(intereses)
+        
     return(poblacioninicial, contEvaluacion)
 
 
@@ -86,8 +92,8 @@ def seleccion_elitismo (poblacioninicialPlusFitness):
     listaPadres = poblacionOrganizada[0:2]
     padre1 = poblacionOrganizada[0][0:numGenes]
     padre2 = poblacionOrganizada[1][0:numGenes]
-    print(padre1)
-    print(padre2)
+    #print(padre1)
+    #print(padre2)
     #print(f" lista de padres: {listaPadres}")
   
     return padre1, padre2
@@ -138,8 +144,8 @@ def lista_hijos (poblacionNum, poblacioninicialPlusFitness, numGenes):
 
     for i in range(0, int(poblacionNum/2)):
 
-        #padres = seleccion_elitismo(poblacioninicialPlusFitness)
-        padres = seleccion_aleatorio(poblacioninicialPlusFitness, poblacionNum, numGenes)
+        padres = seleccion_elitismo(poblacioninicialPlusFitness)
+        #padres = seleccion_aleatorio(poblacioninicialPlusFitness, poblacionNum, numGenes)
         padre1 = padres[0]
         padre2 = padres[1]
 
@@ -164,16 +170,16 @@ poblacioninicialPlusFitnessVector = evaluacion(poblacioninicial,r1,r2,r3,r4,r5, 
 poblacioninicialPlusFitness = poblacioninicialPlusFitnessVector[0]
 contEvaluacion = poblacioninicialPlusFitnessVector[1]
 
-while contEvaluacion <= 50000:
+while fitnesPrimero <= (valorInversion + ganancia*valorInversion):
     #------------------ Operacion de reemplazo: Del peor ------------------------
     # Evaluo fitness de los hijos
     ListaHijos = lista_hijos(poblacionNum, poblacioninicialPlusFitness, numGenes)
     poblacionHijosPlusFitnessVector = evaluacion(ListaHijos,r1,r2,r3,r4,r5, contEvaluacion)
     poblacionHijosPlusFitness = poblacionHijosPlusFitnessVector[0]
     contEvaluacion = poblacionHijosPlusFitnessVector[1]
-
+    if contEvaluacion >= 5000:
+        break
     # ----------------- Concateno lista de hijos y de padres ---------------------
-
     listaTotal = poblacioninicialPlusFitness + poblacionHijosPlusFitness
     poblacionQ = sorted(listaTotal, key=lambda fitness: fitness[numGenes], reverse=True)
     # Escogo los mejores individuos
@@ -189,5 +195,9 @@ while contEvaluacion <= 50000:
     
     poblacioninicialPlusFitness = ListaReemplazo
     
-print("lista reemplazo: ", ListaReemplazo)
-print("Lista nueva", ListaNueva)
+    fitnesPrimero = ListaNueva[4][5]
+    #print("Mejor fitness", fitnesPrimero)
+    
+#print(fitnesPrimero)
+print("Top5 inversiones: ", ListaReemplazo[0:5])
+#print("Lista nueva", ListaNueva)
